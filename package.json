@@ -20,7 +20,7 @@
     "pleroma"
   ],
   "author": "pedrocx486",
-  "license": "WTFPL",
+  "license": "ISC",
   "dependencies": {
     "axios": "~0.27.2",
     "megalodon": "~4.1.0",
