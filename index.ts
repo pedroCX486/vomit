@@ -18,7 +18,7 @@ let pleromaErrorCount = 0;
 let postArg = process.argv[2];
 
 const init = async (): Promise<any> => {
-  console.log('vomit - pedrocx486 - WTFPL');
+  console.log('vomit - birdsite/fediverse client by @pedrocx486');
 
   if (!!postArg.length) {
     if (settings.postOnTwitter) {
