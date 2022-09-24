@@ -4,5 +4,5 @@ export const settings = {
   postOnTwitter: false,
   postOnMastodon: false,
   postOnMisskey: false,
-  postOnPleroma: false
+  postOnPleroma: false,
 }

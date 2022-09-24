@@ -23,18 +23,14 @@ const init = async (): Promise<any> => {
   if (!!postArg.length) {
     if (settings.postOnTwitter) {
       await postToTwitter(postArg);
-    }
-
-    if (settings.postOnMastodon) {
+    } else if (settings.postOnMastodon) {
       await postToMastodon(postArg);
-    }
-
-    if (settings.postOnMisskey) {
+    } else if (settings.postOnMisskey) {
       await postToMisskey(postArg);
-    }
-
-    if (settings.postOnPleroma) {
-      await postToMisskey(postArg);
+    } else if (settings.postOnPleroma) {
+      await postToPleroma(postArg);
+    } else {
+      console.error('No social network is enabled to post on!');
     }
   } else {
     console.error('Nothing to post passed as argument.\nDid you send your post as an arg between quotes "like this"?\nExiting.');
@@ -48,10 +44,10 @@ const postToTwitter = async (tweetContent: string): Promise<void> => {
   }
 
   await twitterClient.post('statuses/update', { status: tweetContent }).then(response => {
-    console.log('\nTweeted: ', `https://twitter.com/${twitterUserData.username}/status/${response.id_str}`);
+    console.log('\nPosted to Twitter: ', `https://twitter.com/${twitterUserData.username}/status/${response.id_str}`);
     twitterErrorCount = 0;
   }).catch(error => {
-    console.error('\nError when posting to Twitter:', error.errors[0].message);
+    console.error('\nError when posting to Twitter: ', error.errors[0].message);
     twitterErrorCount++;
 
     // Retry.
@@ -67,11 +63,10 @@ const postToTwitter = async (tweetContent: string): Promise<void> => {
 const postToMastodon = async (postContent: string): Promise<void> => {
   const client = generator('mastodon', mastodonAuthData.base_url, mastodonAuthData.access_token);
   client.postStatus(postContent).then((res: Response<Entity.Status>) => {
-    console.log('\nPosted to Mastodon: \n');
-    console.log(res.data);
+    console.log('\nPosted to Mastodon: ', `${res.data.uri}`);
     mastodonErrorCount = 0;
   }).catch((error: any) => {
-    console.error('\nError when posting to Mastodon:', error);
+    console.error('\nError when posting to Mastodon: ', error);
     mastodonErrorCount++;
 
     // Retry.
@@ -87,10 +82,10 @@ const postToMastodon = async (postContent: string): Promise<void> => {
 const postToMisskey = async (postContent: string): Promise<void> => {
   const client = generator('misskey', misskeyAuthData.base_url, misskeyAuthData.access_token);
   client.postStatus(postContent).then((res: Response<Entity.Status>) => {
-    console.log('\nNoted: ', `${misskeyAuthData.base_url}/notes/${res.data.id}`);
+    console.log('\nPosted to Misskey: ', `${misskeyAuthData.base_url}/notes/${res.data.id}`);
     misskeyErrorCount = 0;
   }).catch((error: any) => {
-    console.error('\nError when posting to Misskey:', error);
+    console.error('\nError when posting to Misskey: ', error);
     misskeyErrorCount++;
 
     // Retry.
@@ -106,11 +101,10 @@ const postToMisskey = async (postContent: string): Promise<void> => {
 const postToPleroma = async (postContent: string): Promise<void> => {
   const client = generator('pleroma', pleromaAuthData.base_url, pleromaAuthData.access_token);
   client.postStatus(postContent).then((res: Response<Entity.Status>) => {
-    console.log('\nPosted to Pleroma: \n');
-    console.log(res.data);
+    console.log('\nPosted to Pleroma: ', `${res.data.url}`);
     pleromaErrorCount = 0;
   }).catch((error: any) => {
-    console.error('\nError when posting to Pleroma:', error);
+    console.error('\nError when posting to Pleroma: ', error);
     pleromaErrorCount++;
 
     // Retry.
