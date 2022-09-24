@@ -17,7 +17,7 @@ So, you're a terminal goon like me and want to use this from anywhere in your sy
 
 For MacOS (zsh) I did the following:
 
-1- Open your `.zprofile`, add the following (change from `vomit` to whatever the heck you want):
+1- Open your `.zprofile`, add the following (change from `vomit` to whatever the heck you want, also scripts is a folder in my home folder):
 ```
 export PATH=~/scripts:$PATH
 alias vomit='vomit.sh'
