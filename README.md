@@ -31,7 +31,7 @@ alias vomit='vomit.sh'
 Your main point of interest would be `index.ts` file, where the main code resides, check it out if you like having nightmares at night.
   
 # License
-[WTFPL](http://www.wtfpl.net/txt/copying)
+[ISC](https://opensource.org/licenses/ISC)
   
 # Contributing
 Don't. If you want to change anything, fork it. Issues and PRs will be promptly closed because I don't have enough shits to give.
