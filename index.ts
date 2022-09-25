@@ -17,26 +17,6 @@ let pleromaErrorCount = 0;
 
 let postArg = process.argv[2];
 
-const init = async (): Promise<any> => {
-  console.log('vomit - birdsite/fediverse client by @pedrocx486');
-
-  if (!!postArg.length) {
-    if (settings.postOnTwitter) {
-      await postToTwitter(postArg);
-    } else if (settings.postOnMastodon) {
-      await postToMastodon(postArg);
-    } else if (settings.postOnMisskey) {
-      await postToMisskey(postArg);
-    } else if (settings.postOnPleroma) {
-      await postToPleroma(postArg);
-    } else {
-      console.error('No social network is enabled to post on!');
-    }
-  } else {
-    console.error('Nothing to post passed as argument.\nDid you send your post as an arg between quotes "like this"?\nExiting.');
-  }
-}
-
 const postToTwitter = async (tweetContent: string): Promise<void> => {
   if (tweetContent.length > 280) {
     console.error(`\nTwitter: Tweet exceeds maximum allowed length of 180 characters. Not tweetin' this one.`);
@@ -117,4 +97,22 @@ const postToPleroma = async (postContent: string): Promise<void> => {
   })
 }
 
-init();
+(async (): Promise<any> => {
+  console.log('vomit - birdsite/fediverse console client by @pedrocx486');
+
+  if (!!postArg.length) {
+    if (settings.postOnTwitter) {
+      await postToTwitter(postArg);
+    } else if (settings.postOnMastodon) {
+      await postToMastodon(postArg);
+    } else if (settings.postOnMisskey) {
+      await postToMisskey(postArg);
+    } else if (settings.postOnPleroma) {
+      await postToPleroma(postArg);
+    } else {
+      console.error('No social network is enabled to post on!');
+    }
+  } else {
+    console.error('Nothing to post passed as argument.\nDid you send your post as an arg between quotes "like this"?\nExiting.');
+  }
+})();
